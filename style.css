@@ -1,0 +1,24 @@
+body {
+  background: #001f3f; /* Azul oscuro sólido */
+  color: white; /* Color del texto */
+  margin: 0;
+  padding: 0;
+  position: relative; /* Necesario para posicionar los puntos estrellados */
+}
+
+
+.star-field {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Evita que los puntos interfieran con la interacción del usuario */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
+  background-size: 10px 10px; /* Tamaño de la cuadrícula de estrellas */
+  background-repeat: repeat; /* Repite el patrón en todo el contenedor */
+  opacity: 0.8; /* Ajusta la visibilidad de los puntos brillantes */
+}
+
+p {
+  margin: 8px; /* Espaciado entre párrafos */
+}
