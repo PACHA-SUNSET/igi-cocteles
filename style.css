@@ -1,24 +1,601 @@
 body {
-  background: #001f3f; /* Azul oscuro sólido */
-  color: white; /* Color del texto */
-  margin: 0;
-  padding: 0;
-  position: relative; /* Necesario para posicionar los puntos estrellados */
+  height: 100vh; /* Asegúrate de que ocupe toda la altura */
+  font-family: 'Walter Turncoat', cursive;
+  color: white;
+  overflow: hidden;
+  font-weight: bold;
 }
 
 
-.star-field {
+#bgVideo{
+  position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* Evita que los puntos interfieran con la interacción del usuario */
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 1px, transparent 1px);
-  background-size: 10px 10px; /* Tamaño de la cuadrícula de estrellas */
-  background-repeat: repeat; /* Repite el patrón en todo el contenedor */
-  opacity: 0.8; /* Ajusta la visibilidad de los puntos brillantes */
+  object-fit: cover;
+  animation: play 14s infinite; /* Dura el tiempo del video */
 }
 
-p {
-  margin: 8px; /* Espaciado entre párrafos */
+
+
+/* Modal general */
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 1000;
 }
+
+/* Carrusel */
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  font-family: 'Dancing Script', cursive;
+  color: white;
+  padding: 20px;
+  white-space: nowrap;
+  transform: translateY(1cm); /* Mueve el carrusel hacia arriba */
+}
+#carousel2 {
+  margin-top: 80x; /* Ajusta este valor para mover el carrusel 2 hacia abajo */
+}
+
+/* Botellas en el carrusel */
+.bottle {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+  border: 5px solid white;
+}
+
+.bottle:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.modal p {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+#register {
+  background-color: transparent;
+  color: white;
+  font-size: 18px;
+  padding: 20px; /* Ajusta el padding para mayor tamaño */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s;
+  display: flex; /* Para usar flexbox */
+  flex-direction: column; /* Coloca el icono y texto en columna */
+  align-items: center; /* Centra horizontalmente */
+}
+
+#register img {
+  width: 75px; /* Tamaño grande del icono */
+  height: 75px; /* Tamaño grande del icono */
+  margin-bottom: 6px; /* Espacio entre icono y texto */
+}
+
+#register:hover {
+  transform: scale(1.05); /* Aumentar el tamaño al pasar el mouse */
+}
+
+
+#chooseName {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5)); /* Gradiente suave */
+  color: white;
+  font-size: 18px;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  margin-top: 15px;
+}
+
+#chooseName:hover {
+  background: rgba(255, 255, 255, 0.7); /* Cambiar a un fondo más claro al pasar el ratón */
+  transform: scale(1.05);
+}
+
+#nameSelect {
+  margin-bottom: 15px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: black;
+}
+
+#icon {
+  position: fixed;
+  top: 4px;
+  left: 4px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  color: white;
+  transition: transform 0.3s;
+}
+
+#icon:hover {
+  transform: scale(1.1);
+}
+#sidebar {
+  position: fixed;
+  top: 0px;
+  left: -270px;
+  width: 250px;
+  height: 100%;
+  background: linear-gradient(to bottom, 
+    rgba(0, 0, 0, 1), 
+    rgba(0, 0, 0, 0.7), 
+    rgba(0, 0, 0, 0.8), 
+    rgba(0, 0, 0, 1), 
+    rgba(0, 0, 0, 1), 
+    rgba(0, 0, 0, 1), 
+    rgba(0, 0, 0, 0.7), 
+    rgba(0, 0, 0, 1)
+  );
+/* Degradado suave de azul a negro */
+  color: black; /* Color del texto */
+  transition: left 0.3s ease;
+  z-index: 1001;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.5); /* Sombra a la derecha */
+}
+
+
+#sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#sidebar ul li {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+#sidebar a {
+  color: white;
+  text-decoration: none;
+}
+
+#closeSidebar {
+  background: red;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.menu-icon {
+  width: 38px;
+  height: 38px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* Cambia la fuente para todos los botones */
+button {
+  font-family: 'Walter Turncoat', cursive;
+}
+
+/* O solo para botones específicos */
+#chooseName, #register {
+  font-family: 'Walter Turncoat', cursive;
+}
+
+/* Cambia la fuente para el select y sus opciones */
+#nameSelect {
+  font-family: 'Walter Turncoat', cursive;
+  font-weight: bold;
+  color: black;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+/* Estilo para el modal del producto */
+#productModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 413px; /* 300px + 113px */
+  height: 313px; /* 200px + 113px */
+  background: linear-gradient(135deg, rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4), rgba(0, 128, 0, 0.3)); 
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  z-index: 2000;
+}
+
+
+/* Estilo para el mensaje del producto */
+#productMessage {
+  text-align: center;
+  font-size: 34px;
+  margin: 10px;
+  line-height: 1.5;
+}
+
+/* Estilo para el botón de cerrar el modal */
+#closeProductModal {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: none;
+  color: white;
+  border: 1px solid white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s, transform 0.3s;
+}
+
+#closeProductModal:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#quantityControls {
+  display: flex;
+  align-items: center;
+}
+
+#quantityControls button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+#quantity {
+  margin: 0 10px;
+  font-size: 24px;
+}
+
+#quantityControls img {
+  width: 30px;
+  height: 30px;
+}
+
+#addToCart {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5)); /* Gradiente suave */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#addToCart:hover {
+  background-color: black;
+}
+
+.select-product {
+  display: block;
+  margin: 5px 0;
+  padding: 10px;
+  border: none;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  text-align: left;
+  font-size: 16px;
+}
+
+.select-product:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para la tabla del carrito */
+.table-cart {
+  width: 100%;
+  height: auto; /* Cambia de 100% a auto para que no se expanda */
+  margin: 0;
+  border-collapse: collapse;
+  background-color: black;
+  color: white;
+}
+
+.table-cart th, .table-cart td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+  min-width: 50px; /* Define un ancho mínimo para las celdas */
+  height: 40px; /* Establece una altura mínima */
+}
+
+
+.table-cart th {
+  background-color: #333; /* Fondo más oscuro para el encabezado */
+  color: white; /* Color del texto en el encabezado */
+}
+
+.table-cart tr:nth-child(even) {
+  background-color: #444; /* Color de fila alternada */
+}
+
+.table-cart tr:hover {
+  background-color: #555; /* Color al pasar el ratón */
+}
+.cart-modal {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%; /* Ancho del modal */
+  max-width: 945px; /* Ancho máximo */
+  height: auto; /* Altura automática */
+  max-height: 625px; /* Altura máxima */
+  background-color: black; /* Fondo del modal */
+  border-radius: 4px; /* Bordes redondeados */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  padding: 20px; /* Espaciado interno */
+  z-index: 2000;
+  overflow: auto; /* Permitir desplazamiento si la tabla es más alta que el modal */
+}
+
+@media (max-width: 600px) {
+  .cart-modal {
+      width: 95%; /* Más ancho en pantallas pequeñas */
+      height: auto; /* Altura automática */
+      max-height: 80vh; /* Ajuste a un porcentaje de la altura de la pantalla */
+  }
+}
+
+.table-cart {
+  width: 100%; /* Ocupa todo el ancho del modal */
+  height: auto; /* Ajustar altura automáticamente */
+  border-collapse: collapse; /* Eliminar espacios entre celdas */
+  color: white; /* Color de la fuente en blanco */
+}
+
+.table-cart th, .table-cart td {
+  padding: 12px; /* Espaciado interno */
+  text-align: left; /* Alineación del texto */
+}
+
+.table-cart th {
+  background: linear-gradient(10deg, rgba(0, 0, 128, 0.4),rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4),black, black, black,black,black,rgba(0, 0, 128, 0.4), rgba(128, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4)); /* Unifica el color */
+
+  color:#E0FFFF /* Color del texto en el encabezado */
+}
+
+.table-cart tr:nth-child(even),
+.table-cart tr:nth-child(odd) {
+  background: linear-gradient(10deg, rgba(0, 0, 128, 0.4),rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4),black, black, black,black,black,rgba(0, 0, 128, 0.4), rgba(128, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4)); /* Unifica el color */
+}
+
+.table-cart tr:hover {
+  background-color: #555; /* Color al pasar el ratón (puedes mantener este efecto) */
+}
+
+/* Estilo para el botón de cerrar el modal del carrito */
+.close-cart-modal {
+  position: absolute;
+  top: 10px;
+  right: 10px; /* Posiciona a la derecha */
+  background: none;
+  color: white;
+  border: 1px solid violet;
+  padding: 5px 15px; /* Ajusta el espaciado interno */
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px; /* Ajusta el tamaño de la fuente */
+  transition: background 0.3s, transform 0.3s;
+}
+/* Efecto hover */
+.close-cart-modal:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+#clearCartButton {
+  background-color: black; /* Color de fondo negro */
+  color: black; /* Color del texto negro */
+  font-size: 18px; /* Tamaño de fuente */
+  padding: 10px 20px; /* Espaciado interno */
+  text-decoration: none; /* Sin subrayado */
+  border: 2px solid transparent; /* Borde transparente */
+  transition: background-color 0.3s, transform 0.3s, opacity 0.3s; /* Transiciones suaves */
+  display: inline-block; /* Para que se ajuste al contenido */
+  margin-top: 175px; /* Espaciado superior */
+  opacity: 0; /* Invisible por defecto */
+}
+
+#clearCartButton:hover {
+  opacity: 1; /* Visible al pasar el mouse */
+  color: black; /* Cambiar color del texto al pasar el mouse */
+  border-color: black; /* Borde blanco al pasar el mouse */
+}
+/* Estilo específico para el modal de seleccionar nombre */
+#nameModal {
+  width: 400px; /* Ajusta el ancho como prefieras */
+  height: auto; /* Altura automática según el contenido */
+  border-radius: 10px; /* Bordes redondeados */
+  background: linear-gradient(135deg, rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4), rgba(0, 128, 0, 0.3)); /* Degradado de azul a negro más amplio, morado y verde */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+  display: flex; /* Flexbox para centrar contenido */
+  flex-direction: column; /* Columna para el contenido */
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+  position: fixed; /* Fijo para centrar en la ventana */
+  top: 50%; /* A 50% desde la parte superior */
+  left: 50%; /* A 50% desde la izquierda */
+  transform: translate(-50%, -50%); /* Mueve el modal a su centro */
+  transition: left 0.3s ease;
+}
+
+/* Estilo específico para el modal de escanear huella */
+#registerModal {
+  width: 400px; /* Ajusta el ancho como prefieras */
+  height: auto; /* Altura automática según el contenido */
+  border-radius: 10px; /* Bordes redondeados */
+  background: linear-gradient(135deg, rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4), rgba(0, 128, 0, 0.3)); /* Degradado de azul a negro más amplio, morado y verde */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra */
+  display: flex; /* Flexbox para centrar contenido */
+  flex-direction: column; /* Columna para el contenido */
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+  position: fixed; /* Fijo para centrar en la ventana */
+  top: 50%; /* A 50% desde la parte superior */
+  left: 50%; /* A 50% desde la izquierda */
+  transform: translate(-50%, -50%); /* Mueve el modal a su centro */
+  transition: left 0.3s ease;
+}
+/* Asegúrate de que el contenido interno también tenga un fondo */
+#nameModal p,
+#registerModal p {
+
+  padding: 20px; /* Espaciado interno */
+  border-radius: 10px; /* Bordes redondeados internos */
+}
+
+.check {
+  display: none; /* Ocultado por defecto */
+  font-size: 48px; /* Tamaño del check */
+  background: linear-gradient(to right, black, green, green); /* Degradado */
+  -webkit-background-clip: text; /* Clipa el fondo al texto */
+  color: transparent; /* Texto transparente */
+  position: absolute; /* Posicionarlo */
+  top: 85%; /* Ajusta según necesites */
+  left: 50%; /* Centrado horizontal */
+  transform: translate(-50%, -150%) scale(0); /* Escala inicial */
+  z-index: 1000; /* Asegúrate de que esté por encima */
+  animation: checkAnim 0.8s forwards; /* Animación */
+}
+
+.check::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 65px; /* Ancho del círculo */
+  height: 65px; /* Alto del círculo */
+  border: 5px solid green; /* Borde del círculo */
+  border-radius: 50%; /* Circular */
+  transform: translate(-50%, -50%) scale(0); /* Escala inicial */
+  animation: circleDraw 0.8s forwards; /* Animación del círculo */
+  z-index: -1; /* Detrás del check */
+}
+
+/* Animaciones */
+@keyframes checkAnim {
+  0% { transform: translate(-50%, -150%) scale(0); }
+  30% { transform: translate(-50%, -150%) scale(1.2); }
+  100% { transform: translate(-50%, -150%) scale(1); }
+}
+
+@keyframes circleDraw {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+.message {
+  position: absolute;
+  background: linear-gradient(to right, black, green, green); /* Degradado */
+  -webkit-background-clip: text; /* Clipa el fondo al texto */
+  -webkit-text-fill-color: transparent; /* Hace que el color del texto sea transparente */
+  font-size: 30px; /* Ajusta el tamaño del texto */
+  padding: 10px; /* Espaciado alrededor del texto */
+  border-radius: 5px; /* Bordes redondeados */
+  z-index: 2000; /* Asegúrate de que esté encima de otros elementos */
+  pointer-events: none; /* Para que no interfiera con el clic en otros elementos */
+  transform: translate(-50%, -50%) scale(0); /* Escala inicial */
+  animation: circleDraw 0.8s forwards; /* Animación del círculo */
+}
+
+.message::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 49px; /* Ancho del círculo */
+  height: 49px; /* Alto del círculo */
+  border: 5px solid green; /* Borde del círculo */
+  border-radius: 50%; /* Circular */
+  transform: translate(-50%, -50%) scale(0); /* Escala inicial */
+  animation: circleDraw 0.8s forwards; /* Animación del círculo */
+  z-index: -1; /* Detrás del check */
+}
+
+/* Animaciones */
+@keyframes checkAnim {
+  0% { transform: translate(-50%, -150%) scale(0); }
+  30% { transform: translate(-50%, -150%) scale(1.2); }
+  100% { transform: translate(-50%, -150%) scale(1); }
+}
+
+@keyframes circleDraw {
+  0% { transform: translate(-50%, -50%) scale(0); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+.position-right {
+  left: calc(40% + 3cm); /* Mueve 1 cm a la derecha */
+   top: calc(50% + 2cm); /* Baja 1 cm */
+  transform: translate(-50%, -50%); /* Para centrar el mensaje */
+}
+
+
+.position-left {
+  left: 30%; /* Ajusta este valor según sea necesario */
+  top: 50%; /* Cambia la posición vertical si es necesario */
+  transform: translate(-50%, -50%);
+}
+
+#searchDate {
+  background: linear-gradient(10deg, rgba(0, 0, 128, 0.4), rgba(0, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4), black, black, black, black, black, rgba(0, 0, 128, 0.4), rgba(128, 0, 128, 0.4), rgba(0, 0, 0, 1), rgba(128, 0, 128, 0.4)); /* Unifica el color */
+  border: 2px solid white; /* Borde azul */
+  padding: 1px; /* Espaciado interno */
+  border-radius: 12px; /* Bordes redondeados */
+  font-size: 16px; /* Tamaño de la fuente */
+  color: violet; /* Color del texto */
+  transform: translateY(-10px); /* Mueve el input hacia arriba 1 cm */
+}
+
+/* Cambiar el color del borde del input de fecha al foco */
+#searchDate:focus {
+  outline: none; /* Sin borde de enfoque */
+  border-color: black; /* Color de borde al hacer foco */
+}
+
+/* Opcional: Cambiar el color del texto al enfocarse */
+#searchDate::placeholder {
+  color: whitesmoke; /* Color del texto del placeholder */
+}
+
+
